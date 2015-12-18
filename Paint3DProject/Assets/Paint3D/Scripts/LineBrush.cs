@@ -12,7 +12,15 @@ public class LineBrush : Brush {
     // options
     private float startWidth;
     private float endWidth;
-    private Material material;
+    private Color startColor;
+
+    public override string BrushName
+    {
+        get
+        {
+            return "BrushName";
+        }
+    }
 
     public override void AddVertex(Vertex v)
     {
@@ -26,7 +34,7 @@ public class LineBrush : Brush {
 
     public override void Draw()
     {
-        
+        //
     }
 
     public override void Refresh()
@@ -44,19 +52,20 @@ public class LineBrush : Brush {
     public override Dictionary<string, object> GetOptions()
     {
         Dictionary<string, object> opt = new Dictionary<string, object>();
-        opt.Add("Start Width", startWidth);
-        opt.Add("End Width", endWidth);
-        opt.Add("Material", material);
+        opt.Add("StartWidth", startWidth);
+        opt.Add("EndWidth", endWidth);
+        opt.Add("StartColor", startColor);
+        return opt;
     }
 
     public override void SetOptions(Dictionary<string, object> newOptions)
     {
-        object start, end, mat;
-        if (newOptions.TryGetValue("Start Width", out start))
+        object startW, endW, startC, endC;
+        if (newOptions.TryGetValue("StartWidth", out startW))
         {
-            if (start is float)
+            if (startW is float)
             {
-                startWidth = start as float;
+                startWidth = (float)startW;
             }
         }
     }

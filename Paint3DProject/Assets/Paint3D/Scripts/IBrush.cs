@@ -10,6 +10,9 @@ public interface IBrush
 
     Dictionary<string, object> GetOptions();
 
+    Stroke Stroke { get; set; }
+    string BrushName { get; }
+
     /// <summary>
     /// Refreshes the Brush
     /// </summary>
