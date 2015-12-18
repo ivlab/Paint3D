@@ -55,16 +55,18 @@ namespace MinVR {
 		public static event VREventDelegate VREventHandler;
 		
 		private VRNetClient _netClient;
-		
-		// When Unity starts up, Update seems to be called twice before we reach the EndOfFrame callback, so we maintain
-		// a state variable here to make sure that we don't request events twice before requesting swapbuffers.
-		private enum NetState {PreUpdateNext, PostRenderNext}
+        private List<VREvent> inputEvents;
+
+        // When Unity starts up, Update seems to be called twice before we reach the EndOfFrame callback, so we maintain
+        // a state variable here to make sure that we don't request events twice before requesting swapbuffers.
+        private enum NetState {PreUpdateNext, PostRenderNext}
 		private NetState _state = NetState.PreUpdateNext;
 
 
 
 		void Start () {
-			if (connectToVRServer) {
+            inputEvents = new List<VREvent>();
+            if (connectToVRServer) {
 				_netClient = new VRNetClient(VRServerIP, VRServerPort);
 			}
 		}
@@ -94,15 +96,24 @@ namespace MinVR {
 		}
 
 
+	    void AddInputEvent(VREvent e)
+	    {
+	        inputEvents.Add(e);
+	    }
+
 		// AT THE START OF EACH FRAME: SYNCHRONIZE INPUT EVENTS AND CALL ONVREVENT CALLBACK FUNCTIONS
 		void PreUpdate() {
-			List<VREvent> inputEvents = new List<VREvent> ();
 
-			// TODO: Add input events generated in Unity to the list of inputEvents to sync them across all clients
+            // TODO: Add input events generated in Unity to the list of inputEvents to sync them across all clients
+            /*
+            int brushType = 1;
+            VRDataIndex myEventData = new VRDataIndex();
+            myEventData.AddData("BrushType", brushType);
+            VRMain.AddInputEvent(new VREvent("BrushTypeChange", myEventData));
+            */
 
-
-			// ----- FAKE TRACKER INPUT FOR DEBUGGING IN DESKTOP MODE USING MOUSE INPUT -----
-			if (fakeTrackersForDebugging) {
+            // ----- FAKE TRACKER INPUT FOR DEBUGGING IN DESKTOP MODE USING MOUSE INPUT -----
+            if (fakeTrackersForDebugging) {
 				float x = Input.mousePosition.x;
 				float y = Input.mousePosition.y;
 				// first time through
@@ -220,6 +231,7 @@ namespace MinVR {
 				_netClient.SynchronizeSwapBuffersAcrossAllNodes ();
 			}
 			_state = NetState.PreUpdateNext;
+            inputEvents.Clear();
 		}
 
 	}

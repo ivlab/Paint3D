@@ -5,9 +5,11 @@
 using System;
 using UnityEngine;
 
+/*
 #if !UNITY_WEBPLAYER
 using UnityEditor;
 #endif
+*/
 
 public class MeshGenerator : MonoBehaviour
 {
@@ -97,7 +99,7 @@ public class MeshGenerator : MonoBehaviour
         {
             MakeTerrain();
         }
-
+/*
 #if !UNITY_WEBPLAYER
         // check if we're saving this mesh
         if (saveMesh)
@@ -105,7 +107,7 @@ public class MeshGenerator : MonoBehaviour
             AssetDatabase.CreateAsset(mesh, "Assets/Models/generatedMesh.prefab");
             AssetDatabase.SaveAssets();
         }
-#endif
+#endif*/
     }
 
     /// <summary>
