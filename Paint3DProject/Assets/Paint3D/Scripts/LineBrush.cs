@@ -70,9 +70,9 @@ public class LineBrush : Brush {
         }
     }
 
-    public LineBrush(Stroke s)
-    {
-        stroke = s;
-        lr = stroke.gameObject.AddComponent<LineRenderer>();
-    }
+    //public LineBrush(Stroke s)
+    //{
+    //    stroke = s;
+    //    lr = stroke.gameObject.AddComponent<LineRenderer>();
+    //}
 }

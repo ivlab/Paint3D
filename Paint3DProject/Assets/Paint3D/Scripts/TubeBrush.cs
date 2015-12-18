@@ -10,6 +10,8 @@ public class TubeBrush : Brush
 
     int sides = 6;
 
+    public override string BrushName { get { return "TubeBrush"; } }
+
     public override void AddVertex(Vertex v)
     {
         List<Vector3> verts =new List<Vector3>( mesh.vertices);
@@ -42,12 +44,12 @@ public class TubeBrush : Brush
         throw new NotImplementedException();
     }
 
-    public TubeBrush(Stroke stroke)
-        : base(stroke)
-    {
-        go = new GameObject("Tube");
-        mesh = (go.AddComponent<MeshFilter>()).mesh;
-        go.AddComponent<MeshRenderer>().;
+    //public TubeBrush(Stroke stroke)
+    //    : base(stroke)
+    //{
+    //    go = new GameObject("Tube");
+    //    mesh = (go.AddComponent<MeshFilter>()).mesh;
+    //    //go.AddComponent<MeshRenderer>();
         
-    }
+    //}
 }

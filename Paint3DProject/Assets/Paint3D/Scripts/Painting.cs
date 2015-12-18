@@ -12,6 +12,7 @@ public class Painting : MonoBehaviour {
     /// List of all strokes created, including the current
     /// </summary>
     public List<Stroke> strokes;
+
     /// <summary>
     /// index of current stroke in list 
     /// </summary>
@@ -53,6 +54,7 @@ public class Painting : MonoBehaviour {
         opt.Add("EndColor", Color.clear);
         opt.Add("StartWidth", 2.0f);
         opt.Add("EndWidth", 0.5f);
+        options.Add("TubeBrush", opt);
     }
 	
 	// Update is called once per frame
@@ -65,16 +67,27 @@ public class Painting : MonoBehaviour {
 
     void StartNewStroke()
     {
-        CurrentStroke = new Stroke();
-        strokes.Add(CurrentStroke);
-        curIndex = strokes.Count - 1;
-        CurrentStroke.Brush = BrushManager.CreateBrush(CurrentStroke, SelectedBrush, null);
-        CurrentStroke.Brush.SetOptions(options[CurrentStroke.Brush.BrushName]);
+        if (CurrentStroke == null)
+        {
+            CurrentStroke = new Stroke();
+            strokes.Add(CurrentStroke);
+            curIndex = strokes.Count - 1;
+            CurrentStroke.Brush = BrushManager.CreateBrush(CurrentStroke, SelectedBrush, null);
+            CurrentStroke.Brush.SetOptions(options[CurrentStroke.Brush.BrushName]); 
+        }
+    }
+
+    void AddVertex(Vertex v)
+    {
+        if (CurrentStroke != null)
+        {
+            CurrentStroke.AddVertex(v);
+        }
     }
 
     void EndStroke()
     {
-
+        CurrentStroke = null;
     }
 
 }

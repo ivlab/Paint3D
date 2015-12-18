@@ -44,9 +44,9 @@ public class BubbleBrush : Brush
         throw new NotImplementedException();
     }
 
-    public BubbleBrush(Stroke stroke)
-        : base(stroke)
-    {
-        go = new GameObject("Bubbles");
-    }
+    //public BubbleBrush(Stroke stroke)
+    //    : base(stroke)
+    //{
+    //    go = new GameObject("Bubbles");
+    //}
 }
