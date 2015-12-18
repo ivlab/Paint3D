@@ -51,10 +51,12 @@ public class Paint3DMain : MonoBehaviour
     private int user1BrushType = 1;
     private int user2BrushType = 1;
 
-
     // indicate whether to draw in this update call
     private bool user1StartDrawing = false;
     private bool user2StartDrawing = false;
+
+    private Painting user1Painting;
+    private Painting user2Painting;
 
     // Menu Flags
     private bool isOpenUser1Menu = false;
@@ -78,7 +80,9 @@ public class Paint3DMain : MonoBehaviour
         mainMenu.enabled = false;
         subMenu1.enabled = false;
         btnClickPos = new Vector3(0, 0, 0);
-	}
+        user1Painting = gameObject.AddComponent<Painting>();
+        user2Painting = gameObject.AddComponent<Painting>();
+    }
 
 
 	void FixedUpdate ()
@@ -108,58 +112,21 @@ public class Paint3DMain : MonoBehaviour
 		
 		//
 		if (user1StartDrawing && !showMenu && !showSubMenu1) {
-            // USER 1 drawing depends on shape
-            GameObject paintedObj1 = null;
             
-            if (user1BrushType == 1)
-            {
-                paintedObj1 = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                paintedObj1.GetComponent<Renderer>().material.color = Color.red;
+            Vertex v = new Vertex();
+            v.position = brushCursor.transform.position;
+            v.orientation = brushCursor.transform.rotation;
 
-            }
-            else if (user1BrushType == 2)
-            {
-                paintedObj1 = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                paintedObj1.GetComponent<Renderer>().material.color = Color.blue;
-
-            }
-            else if (user1BrushType == 3)
-            {
-                paintedObj1 = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
-                paintedObj1.GetComponent<Renderer>().material.color = Color.green;
-
-            }
-            paintedObj1.transform.parent = GameObject.Find("Painting").transform;
-            paintedObj1.transform.position = brushCursor.transform.position;
-			paintedObj1.transform.rotation = brushCursor.transform.rotation;
-            paintedObj1.transform.localScale = new Vector3 (0.3f, 0.3f, 0.3f);
-		}
+            user1Painting.AddVertuex(v);
+        }
 
         if (user2StartDrawing && !showMenu && !showSubMenu1)
         {
-            // USER 2 drawing depends on shape
-            GameObject paintedObj2 = null;
-            
-            if (user2BrushType == 1)
-            {
-                paintedObj2 = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                paintedObj2.GetComponent<Renderer>().material.color = Color.red;
-            } else if (user2BrushType == 2)
-            {
-                paintedObj2 = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                paintedObj2.GetComponent<Renderer>().material.color = Color.blue;
+            Vertex v = new Vertex();
+            v.position = brushCursor2.transform.position;
+            v.orientation = brushCursor2.transform.rotation;
 
-            }
-            else if (user2BrushType == 3)
-            {
-                paintedObj2 = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
-                paintedObj2.GetComponent<Renderer>().material.color = Color.green;
-
-            }
-            paintedObj2.transform.parent = GameObject.Find("Painting2").transform;
-            paintedObj2.transform.position = brushCursor2.transform.position;
-            paintedObj2.transform.rotation = brushCursor2.transform.rotation;
-            paintedObj2.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+            user2Painting.AddVertuex(v);
         }
 
         // Show or Hide menu depends on Menu Flags
@@ -228,11 +195,13 @@ public class Paint3DMain : MonoBehaviour
                 if (!showMenu && !showSubMenu1)
                 {
                     user1StartDrawing = true;
+                    user1Painting.StartNewStroke();
                 }
                 else
                 {
                     // ensure drawing is disabled
                     user1StartDrawing = false;
+                    user1Painting.EndStroke();
                 }
                 Debug.Log("Red User 1 drawing down");
             } else if (user_id == 2)
@@ -240,6 +209,7 @@ public class Paint3DMain : MonoBehaviour
                 if (!isOpenUser1Menu)
                 {
                     user1StartDrawing = true;
+                    user1Painting.StartNewStroke();
                 }
             }
 
@@ -247,7 +217,8 @@ public class Paint3DMain : MonoBehaviour
         else if (e.Name == "stylus1_btn0_up")
         {
             // ensure user 1 drawing is disabled
-            user1StartDrawing = false;
+            //user1StartDrawing = false;
+            user1Painting.EndStroke();
 
             if (user_id == 1)
             {
@@ -264,15 +235,18 @@ public class Paint3DMain : MonoBehaviour
                 {
                     if (subMenu1Index == 1)
                     {
-                        user1BrushType = 1;
+                        //user1BrushType = 1;
+                        user1Painting.CurrentBrush = "LineBrush";
                     }
                     else if (subMenu1Index == 2)
                     {
-                        user1BrushType = 2;
+                        //user1BrushType = 2;
+                        user1Painting.CurrentBrush = "TubeBrush";
                     }
                     else if (subMenu1Index == 3)
                     {
-                        user1BrushType = 3;
+                        //user1BrushType = 3;
+                        user1Painting.CurrentBrush = "BubbleBrush";
                     }
 
                     showSubMenu1 = false;
@@ -320,11 +294,13 @@ public class Paint3DMain : MonoBehaviour
                 if (!showMenu && !showSubMenu1)
                 {
                     user2StartDrawing = true;
+                    user2Painting.StartNewStroke();
                 }
                 else
                 {
                     // ensure drawing is disabled
                     user2StartDrawing = false;
+                    user2Painting.EndStroke();
                 }
                 Debug.Log("Red User 1 drawing down");
             }
@@ -333,6 +309,7 @@ public class Paint3DMain : MonoBehaviour
                 if (!isOpenUser2Menu)
                 {
                     user2StartDrawing = true;
+                    user2Painting.StartNewStroke();
                 }
             }
 
@@ -341,6 +318,7 @@ public class Paint3DMain : MonoBehaviour
         {
             // ensure user 2 drawing is disabled
             user2StartDrawing = false;
+            user2Painting.EndStroke();
 
             if (user_id == 2)
             {
@@ -357,15 +335,18 @@ public class Paint3DMain : MonoBehaviour
                 {
                     if (subMenu1Index == 1)
                     {
-                        user2BrushType = 1;
+                        //user2BrushType = 1;
+                        user2Painting.CurrentBrush = "LineBrush";
                     }
                     else if (subMenu1Index == 2)
                     {
                         user2BrushType = 2;
+                        user2Painting.CurrentBrush = "TubeBrush";
                     }
                     else if (subMenu1Index == 3)
                     {
                         user2BrushType = 3;
+                        user2Painting.CurrentBrush = "BubbleBrush";
                     }
 
                     showSubMenu1 = false;

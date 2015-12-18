@@ -7,7 +7,7 @@ public abstract class Brush : ScriptableObject, IBrush
     public abstract string BrushName { get; }
 
     private Stroke mStroke;
-    public Stroke Stroke
+    public virtual Stroke Stroke
     {
         get { return mStroke; }
         set

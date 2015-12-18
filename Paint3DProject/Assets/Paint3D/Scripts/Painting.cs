@@ -25,7 +25,7 @@ public class Painting : MonoBehaviour {
     /// <summary>
     /// The name of the currently selected brush.
     /// </summary>
-    public string SelectedBrush { get; set; }
+    public string CurrentBrush { get; set; }
 
     /// <summary>
     /// This dictionary follows the structure layed out in Brushes.txt
@@ -65,10 +65,10 @@ public class Painting : MonoBehaviour {
     {
         if (CurrentStroke == null)
         {
-            CurrentStroke = new Stroke();
+            CurrentStroke = gameObject.AddComponent<Stroke>();
             strokes.Add(CurrentStroke);
             curIndex = strokes.Count - 1;
-            CurrentStroke.Brush = BrushManager.CreateBrush(CurrentStroke, SelectedBrush, null);
+            CurrentStroke.Brush = BrushManager.CreateBrush(CurrentStroke, CurrentBrush, null);
             CurrentStroke.Brush.SetOptions(options[CurrentStroke.Brush.BrushName]); 
         }
     }

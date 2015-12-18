@@ -25,7 +25,9 @@ public class LineBrush : Brush {
 
     public override void AddVertex(Vertex v)
     {
+        lr.SetVertexCount(count + 1);
         lr.SetPosition(count, v.position);
+        count++;
     }
 
     public override void Dispose()
@@ -69,6 +71,20 @@ public class LineBrush : Brush {
             {
                 startWidth = (float)startW;
             }
+        }
+    }
+
+    public override Stroke Stroke
+    {
+        get
+        {
+            return base.Stroke;
+        }
+
+        set
+        {
+            base.Stroke = value;
+            lr = stroke.gameObject.AddComponent<LineRenderer>();
         }
     }
 }
