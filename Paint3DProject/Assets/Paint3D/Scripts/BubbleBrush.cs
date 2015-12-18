@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class BubbleBrush : Brush
 {
-    private Color BubbleColor;
-	private float minSize;
-	private float maxRadius;
-	private float rate;
-	private float density;
+    private Color BubbleColor = Color.cyan;
+	private float minSize = 0.4f;
+	private float maxSize = 2.0f;
+	private float rate = 1.0f;
+	private float density = 1.0f;
 
     GameObject go;
 
@@ -26,12 +26,18 @@ public class BubbleBrush : Brush
 
     public override void Draw()
     {
-        throw new NotImplementedException();
+        //
     }
 
     public override Dictionary<string, object> GetOptions()
     {
-        throw new NotImplementedException();
+        Dictionary<string, object> opt = new Dictionary<string, object>();
+        opt.Add("Color", BubbleColor);
+        opt.Add("minSize", minSize);
+        opt.Add("maxSize", maxSize);
+        opt.Add("rate", rate);
+        opt.Add("density", density);
+        return opt;
     }
 
     public override void Refresh()
@@ -43,10 +49,4 @@ public class BubbleBrush : Brush
     {
         throw new NotImplementedException();
     }
-
-    //public BubbleBrush(Stroke stroke)
-    //    : base(stroke)
-    //{
-    //    go = new GameObject("Bubbles");
-    //}
 }

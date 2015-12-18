@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class TubeBrush : Brush
 {
+    private int   SideCount;
+    private Color StartColor;
+    private Color EndColor;
+    private float StartWidth;
+    private float EndWidth;
+
     GameObject go;
     int last;
     Mesh mesh;
@@ -11,7 +17,6 @@ public class TubeBrush : Brush
     int sides = 6;
 
     public override string BrushName { get { return "TubeBrush"; } }
-
     public override void AddVertex(Vertex v)
     {
         List<Vector3> verts =new List<Vector3>( mesh.vertices);
@@ -31,7 +36,13 @@ public class TubeBrush : Brush
 
     public override Dictionary<string, object> GetOptions()
     {
-        throw new NotImplementedException();
+        Dictionary<string, object> opt = new Dictionary<string, object>();
+        opt.Add("SideCount", SideCount);
+        opt.Add("StartColor", StartColor);
+        opt.Add("EndColor", EndColor);
+        opt.Add("StartWidth", StartWidth);
+        opt.Add("EndWidth", EndWidth);
+        return opt;
     }
 
     public override void Refresh()
@@ -43,13 +54,4 @@ public class TubeBrush : Brush
     {
         throw new NotImplementedException();
     }
-
-    //public TubeBrush(Stroke stroke)
-    //    : base(stroke)
-    //{
-    //    go = new GameObject("Tube");
-    //    mesh = (go.AddComponent<MeshFilter>()).mesh;
-    //    //go.AddComponent<MeshRenderer>();
-        
-    //}
 }

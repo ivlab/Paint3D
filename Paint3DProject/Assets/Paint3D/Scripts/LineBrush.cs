@@ -13,6 +13,7 @@ public class LineBrush : Brush {
     private float startWidth;
     private float endWidth;
     private Color startColor;
+    private Color endColor;
 
     public override string BrushName
     {
@@ -55,6 +56,7 @@ public class LineBrush : Brush {
         opt.Add("StartWidth", startWidth);
         opt.Add("EndWidth", endWidth);
         opt.Add("StartColor", startColor);
+        opt.Add("EndColor", endColor);
         return opt;
     }
 
@@ -69,10 +71,4 @@ public class LineBrush : Brush {
             }
         }
     }
-
-    //public LineBrush(Stroke s)
-    //{
-    //    stroke = s;
-    //    lr = stroke.gameObject.AddComponent<LineRenderer>();
-    //}
 }

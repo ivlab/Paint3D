@@ -40,21 +40,17 @@ public class Painting : MonoBehaviour {
         strokes = new List<Stroke>();
 
         options = new Dictionary<string, Dictionary<string, object>>();
-        // LineBrush
-        Dictionary<string, object> opt = new Dictionary<string, object>();
-        opt.Add("StartColor", Color.red);
-        opt.Add("EndColor", Color.magenta);
-        opt.Add("StartWidth", 2.0f);
-        opt.Add("EndWidth", 1.0f);
-        options.Add("LineBrush", opt);
 
-        // Tube Brush
-        opt = new Dictionary<string, object>();
-        opt.Add("StartColor", Color.blue);
-        opt.Add("EndColor", Color.clear);
-        opt.Add("StartWidth", 2.0f);
-        opt.Add("EndWidth", 0.5f);
-        options.Add("TubeBrush", opt);
+        foreach (string name in BrushManager.AvailableBrushes)
+        {
+            Dictionary<string, object> defaultOpt = BrushManager.GetDefaultOptions(name);
+            Dictionary<string, object> opt = new Dictionary<string, object>();
+            foreach (KeyValuePair<string, object> pair in defaultOpt)
+            {
+                opt.Add(pair.Key, pair.Value);
+            }
+            options.Add(name, opt);
+        }
     }
 	
 	// Update is called once per frame
@@ -65,7 +61,7 @@ public class Painting : MonoBehaviour {
         //}
 	}
 
-    void StartNewStroke()
+    public void StartNewStroke()
     {
         if (CurrentStroke == null)
         {
@@ -77,7 +73,7 @@ public class Painting : MonoBehaviour {
         }
     }
 
-    void AddVertex(Vertex v)
+    public void AddVertuex(Vertex v)
     {
         if (CurrentStroke != null)
         {
@@ -85,7 +81,7 @@ public class Painting : MonoBehaviour {
         }
     }
 
-    void EndStroke()
+    public void EndStroke()
     {
         CurrentStroke = null;
     }
