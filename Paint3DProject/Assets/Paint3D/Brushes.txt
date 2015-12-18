@@ -15,7 +15,7 @@ LineBrush {
 BubbleBrush {
 	Color: Color,
 	minSize: float,
-	maxRadius: float,
+	maxSize: float,
 	rate: float,
 	density: float,
 }
