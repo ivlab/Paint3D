@@ -1,0 +1,29 @@
+﻿Key:
+BrushName {
+	Option1Name: option1Type,
+	Option1Name: option2Type,
+	etc...
+}
+
+LineBrush {
+	StartColor: Color,
+	EndColor: Color,
+	StartWidth: float,
+	EndWidth: float
+}
+
+BubbleBrush {
+	Color: Color,
+	minSize: float,
+	maxRadius: float,
+	rate: float,
+	density: float,
+}
+
+TubeBrush {
+	SideCount: int,
+	StartColor: Color,
+	EndColor: Color,
+	StartWidth: float,
+	EndWidth: float,
+}

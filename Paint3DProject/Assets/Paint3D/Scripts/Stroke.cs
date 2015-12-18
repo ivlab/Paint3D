@@ -37,7 +37,7 @@ public class Stroke : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	    
+        Brush.Draw();
 	}
 
     public void AddVertex(Vertex v)
