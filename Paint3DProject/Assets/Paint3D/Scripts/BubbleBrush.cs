@@ -31,9 +31,15 @@ public class BubbleBrush : Brush
     {
         float dt = Time.deltaTime;
         int length = Stroke.Vertices.Count;
-        ParticleSystem.EmitParams emitParams = new ParticleSystem.EmitParams();
-        emitParams.startLifetime = 1f;
-        emitParams.startSize = 0.1f;
+        //EmitParams emitParams = new EmitParams();
+        //emitParams.startLifetime = 1f;
+        //emitParams.startSize = 0.1f;
+
+        float life = 1f;
+        float size = 0.1f;
+
+        Vector3 vel;
+        Vector3 pos;
 
         
         for (int i = 0; i < length; i++)
@@ -42,12 +48,18 @@ public class BubbleBrush : Brush
             float probability = rate * dt;
             int count = (int)probability;
             probability = probability - (float)Math.Truncate(probability);
-            emitParams.velocity = Random.onUnitSphere;
-            emitParams.position = (Vector3)(mStroke.Vertices[i].position) + Random.insideUnitSphere / density;
+            //emitParams.velocity = Random.onUnitSphere;
+            //emitParams.position = (Vector3)(mStroke.Vertices[i].position) + Random.insideUnitSphere / density;
+            vel = Random.onUnitSphere;
+            pos = (Vector3)(mStroke.Vertices[i].position) + Random.insideUnitSphere / density;
             if (r < probability)
                 count++;
 
-            ps.Emit(emitParams, count);
+            //ps.Emit(emitParams, count);
+            for (int j = 0; j < count; i++)
+            {
+                ps.Emit(pos, vel, size, life, Color.black);
+            }
         }
     }
 

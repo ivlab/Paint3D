@@ -15,8 +15,8 @@ public class PaintTester : MonoBehaviour {
         mainCam = GameObject.FindObjectOfType<Camera>();
 
         //painting.CurrentBrush = "LineBrush";
-        painting.CurrentBrush = "BubbleBrush";
-        //painting.CurrentBrush = "TubeBrush";
+        //painting.CurrentBrush = "BubbleBrush";
+        painting.CurrentBrush = "TubeBrush";
 
         //painting.StartNewStroke();
         //
