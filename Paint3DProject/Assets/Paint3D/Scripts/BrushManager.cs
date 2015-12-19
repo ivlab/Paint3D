@@ -2,6 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// Static class which hols information on all the available brushes.
+/// </summary>
 public static class BrushManager {
     //                  name 
     private static List<string> availableBrushes;

@@ -19,7 +19,7 @@ public class Stroke : MonoBehaviour {
         get { return mBrush; }
         set
         {
-            if (mBrush != value)
+            if (mBrush != value && mBrush != null)
             {
                 mBrush.Dispose();
             }
@@ -31,17 +31,25 @@ public class Stroke : MonoBehaviour {
     public List<Vertex> Vertices;
 
     // Use this for initialization
-    void Start () {
+    void Awake () {
         Vertices = new List<Vertex>();
+        enabled = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        Brush.Draw();
+        if (Brush != null)
+        {
+            Brush.Draw();
+        }
 	}
 
     public void AddVertex(Vertex v)
     {
         Vertices.Add(v);
+        if (Brush != null)
+        {
+            Brush.AddVertex(v);
+        }
     }
 }

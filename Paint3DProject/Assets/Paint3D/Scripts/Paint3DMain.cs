@@ -81,7 +81,9 @@ public class Paint3DMain : MonoBehaviour
         subMenu1.enabled = false;
         btnClickPos = new Vector3(0, 0, 0);
         user1Painting = gameObject.AddComponent<Painting>();
+        user1Painting.CurrentBrush = "LineBrush";
         user2Painting = gameObject.AddComponent<Painting>();
+        user2Painting.CurrentBrush = "LineBrush";
     }
 
 
@@ -117,7 +119,7 @@ public class Paint3DMain : MonoBehaviour
             v.position = brushCursor.transform.position;
             v.orientation = brushCursor.transform.rotation;
 
-            user1Painting.AddVertuex(v);
+            user1Painting.AddVertex(v);
         }
 
         if (user2StartDrawing && !showMenu && !showSubMenu1)
@@ -126,7 +128,7 @@ public class Paint3DMain : MonoBehaviour
             v.position = brushCursor2.transform.position;
             v.orientation = brushCursor2.transform.rotation;
 
-            user2Painting.AddVertuex(v);
+            user2Painting.AddVertex(v);
         }
 
         // Show or Hide menu depends on Menu Flags
@@ -196,6 +198,12 @@ public class Paint3DMain : MonoBehaviour
                 {
                     user1StartDrawing = true;
                     user1Painting.StartNewStroke();
+                    // add first vertex to painting
+                    Vertex v = new Vertex();
+                    v.position = brushCursor.transform.position;
+                    v.orientation = brushCursor.transform.rotation;
+
+                    user1Painting.AddVertex(v);
                 }
                 else
                 {
@@ -210,6 +218,11 @@ public class Paint3DMain : MonoBehaviour
                 {
                     user1StartDrawing = true;
                     user1Painting.StartNewStroke();
+                    // add first vertex to painting
+                    Vertex v = new Vertex();
+                    v.position = brushCursor.transform.position;
+                    v.orientation = brushCursor.transform.rotation;
+                    user1Painting.AddVertex(v);
                 }
             }
 
@@ -295,6 +308,11 @@ public class Paint3DMain : MonoBehaviour
                 {
                     user2StartDrawing = true;
                     user2Painting.StartNewStroke();
+                    // add first vertex to painting
+                    Vertex v = new Vertex();
+                    v.position = brushCursor.transform.position;
+                    v.orientation = brushCursor.transform.rotation;
+                    user2Painting.AddVertex(v);
                 }
                 else
                 {
@@ -310,6 +328,11 @@ public class Paint3DMain : MonoBehaviour
                 {
                     user2StartDrawing = true;
                     user2Painting.StartNewStroke();
+                    // add first vertex to painting
+                    Vertex v = new Vertex();
+                    v.position = brushCursor.transform.position;
+                    v.orientation = brushCursor.transform.rotation;
+                    user2Painting.AddVertex(v);
                 }
             }
 

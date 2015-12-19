@@ -13,6 +13,8 @@ public class Painting : MonoBehaviour {
     /// </summary>
     public List<Stroke> strokes;
 
+    private List<GameObject> children;
+
     /// <summary>
     /// index of current stroke in list 
     /// </summary>
@@ -35,8 +37,8 @@ public class Painting : MonoBehaviour {
     /// </summary>
     public Dictionary<string, Dictionary<string, object>> options;
 
-    // Use this for initialization
-    void Start () {
+    void Awake()
+    {
         strokes = new List<Stroke>();
 
         options = new Dictionary<string, Dictionary<string, object>>();
@@ -51,6 +53,13 @@ public class Painting : MonoBehaviour {
             }
             options.Add(name, opt);
         }
+
+        children = new List<GameObject>();
+    }
+
+    // Use this for initialization
+    void Start () {
+
     }
 	
 	// Update is called once per frame
@@ -65,15 +74,20 @@ public class Painting : MonoBehaviour {
     {
         if (CurrentStroke == null)
         {
-            CurrentStroke = gameObject.AddComponent<Stroke>();
+            GameObject go = new GameObject();
+            go.transform.SetParent(gameObject.transform, false);
+            children.Add(go);
+            CurrentStroke = go.AddComponent<Stroke>();
             strokes.Add(CurrentStroke);
             curIndex = strokes.Count - 1;
             CurrentStroke.Brush = BrushManager.CreateBrush(CurrentStroke, CurrentBrush, null);
-            CurrentStroke.Brush.SetOptions(options[CurrentStroke.Brush.BrushName]); 
+            Debug.Log(CurrentStroke.Brush.BrushName);
+            CurrentStroke.Brush.SetOptions(options[CurrentStroke.Brush.BrushName]);
+            CurrentStroke.enabled = true;
         }
     }
 
-    public void AddVertuex(Vertex v)
+    public void AddVertex(Vertex v)
     {
         if (CurrentStroke != null)
         {

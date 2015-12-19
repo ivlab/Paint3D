@@ -6,7 +6,9 @@ public abstract class Brush : ScriptableObject, IBrush
 {
     public abstract string BrushName { get; }
 
-    private Stroke mStroke;
+    protected bool enabled;
+
+    protected Stroke mStroke;
     public virtual Stroke Stroke
     {
         get { return mStroke; }
@@ -23,5 +25,10 @@ public abstract class Brush : ScriptableObject, IBrush
     public abstract Dictionary<string, object> GetOptions();
     public abstract void Refresh();
     public abstract void SetOptions(Dictionary<string, object> newOptions);
+
+    public Brush()
+    {
+        enabled = false;
+    }
 }
     

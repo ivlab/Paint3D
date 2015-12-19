@@ -6,20 +6,19 @@ using System.Collections.Generic;
 public class LineBrush : Brush {
 
     private int count;
-    private Stroke stroke;
     private LineRenderer lr;
 
     // options
-    private float startWidth;
-    private float endWidth;
-    private Color startColor;
-    private Color endColor;
+    private float startWidth = 1.0f;
+    private float endWidth = 0.0f;
+    private Color startColor = Color.blue;
+    private Color endColor = Color.gray;
 
     public override string BrushName
     {
         get
         {
-            return "BrushName";
+            return "LineBrush";
         }
     }
 
@@ -42,13 +41,17 @@ public class LineBrush : Brush {
 
     public override void Refresh()
     {
-        int length = stroke.Vertices.Count;
-        
-        lr.SetVertexCount(length);
-
-        for (int i = 0; i < length; i++)
+        if (mStroke.enabled)
         {
-            lr.SetPosition(i, stroke.Vertices[i].position);
+
+            int length = mStroke.Vertices.Count;
+
+            lr.SetVertexCount(length);
+
+            for (int i = 0; i < length; i++)
+            {
+                lr.SetPosition(i, mStroke.Vertices[i].position);
+            }
         }
     }
 
@@ -64,12 +67,37 @@ public class LineBrush : Brush {
 
     public override void SetOptions(Dictionary<string, object> newOptions)
     {
-        object startW, endW, startC, endC;
+        object startW; // = startWidth;
+        object endW;// = endWidth;
+        object startC;// = startColor;
+        object endC;// = endColor;
+
         if (newOptions.TryGetValue("StartWidth", out startW))
         {
             if (startW is float)
             {
                 startWidth = (float)startW;
+            }
+        }
+        if (newOptions.TryGetValue("EndWidth", out endW))
+        {
+            if (endW is float)
+            {
+                endWidth = (float)endW;
+            }
+        }
+        if (newOptions.TryGetValue("StartWidth", out startC))
+        {
+            if (startW is Color)
+            {
+                startColor = (Color)startC;
+            }
+        }
+        if (newOptions.TryGetValue("EndColor", out endC))
+        {
+            if (endW is Color)
+            {
+                endColor = (Color)endC;
             }
         }
     }
@@ -84,7 +112,12 @@ public class LineBrush : Brush {
         set
         {
             base.Stroke = value;
-            lr = stroke.gameObject.AddComponent<LineRenderer>();
+            lr = mStroke.gameObject.AddComponent<LineRenderer>();
+            lr.SetWidth(startWidth, endWidth);
+            lr.SetColors(startColor, endColor);
+            Material lineMat = new Material(Shader.Find("Sprites/Default"));
+            lr.material = lineMat;
+
         }
     }
 }
