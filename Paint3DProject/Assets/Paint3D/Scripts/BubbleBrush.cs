@@ -1,22 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class BubbleBrush : Brush
 {
     private Color BubbleColor = Color.cyan;
-	private float minSize = 0.4f;
-	private float maxSize = 2.0f;
-	private float rate = 1.0f;
-	private float density = 1.0f;
+	private float minSize = 0.1f;
+	private float maxSize = 0.25f;
+	private float rate = 5f;
+	private float density = 10.0f;
 
     GameObject go;
+    ParticleSystem ps;
+    Mesh emitMesh;
 
     public override string BrushName { get { return "BubbleBrush"; } }
 
     public override void AddVertex(Vertex v)
     {
-        //
+        // 
     }
 
     public override void Dispose()
@@ -24,9 +27,28 @@ public class BubbleBrush : Brush
         Destroy(go);
     }
 
-    public override void Draw()
+    public override void Update()
     {
-        //
+        float dt = Time.deltaTime;
+        int length = Stroke.Vertices.Count;
+        ParticleSystem.EmitParams emitParams = new ParticleSystem.EmitParams();
+        emitParams.startLifetime = 1f;
+        emitParams.startSize = 0.1f;
+
+        
+        for (int i = 0; i < length; i++)
+        {
+            float r = Random.value;
+            float probability = rate * dt;
+            int count = (int)probability;
+            probability = probability - (float)Math.Truncate(probability);
+            emitParams.velocity = Random.onUnitSphere;
+            emitParams.position = (Vector3)(mStroke.Vertices[i].position) + Random.insideUnitSphere / density;
+            if (r < probability)
+                count++;
+
+            ps.Emit(emitParams, count);
+        }
     }
 
     public override Dictionary<string, object> GetOptions()
@@ -42,11 +64,29 @@ public class BubbleBrush : Brush
 
     public override void Refresh()
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     public override void SetOptions(Dictionary<string, object> newOptions)
     {
-        throw new NotImplementedException();
+        //
+    }
+
+    public override Stroke Stroke
+    {
+        get
+        {
+            return base.Stroke;
+        }
+
+        set
+        {
+            base.Stroke = value;
+            emitMesh = new Mesh();
+            go = Instantiate(Resources.Load<GameObject>("Prefabs/BubbleEmiter"));
+            go.transform.parent = mStroke.gameObject.transform;
+            ps = go.GetComponent<ParticleSystem>();
+            ps.Stop();
+        }
     }
 }

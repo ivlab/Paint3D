@@ -7,8 +7,8 @@ public class TubeBrush : Brush
     private int   SideCount = 6;
     private Color StartColor = Color.gray;
     private Color EndColor = Color.green;
-    private float StartWidth = 0.5f;
-    private float EndWidth = 0.25f;
+    private float StartWidth = 0.25f;
+    private float EndWidth = 0.125f;
 
     List<Vector3> verts;
     List<int> inds;
@@ -38,7 +38,7 @@ public class TubeBrush : Brush
         Destroy(mr);
     }
 
-    public override void Draw()
+    public override void Update()
     {
         //throw new NotImplementedException();
     }
@@ -94,7 +94,7 @@ public class TubeBrush : Brush
             v += center;
             verts.Add(v);
             colors.Add(StartColor);
-            inds.Add((j + SideCount) % SideCount);
+            //inds.Add((j + SideCount) % SideCount);
         }
 
         for (int i = 1; i < count; i++)
@@ -114,26 +114,38 @@ public class TubeBrush : Brush
                 colors.Add(color);
 
                 // tri 1
-                //inds.Add(n + j - SideCount);
-                //inds.Add(n + (j + SideCount - 1) % SideCount);
-                //inds.Add(n);
+                inds.Add(n + j);
+                inds.Add(j + n - SideCount);
+                inds.Add((j + 1) % SideCount + n);
 
                 // tri 2
-                //inds.Add(n + (j + SideCount - 1) % SideCount);
-                //inds.Add(n +j);
-                //inds.Add(n + j - SideCount);
+                inds.Add((j + 1) % SideCount + n);
+                inds.Add(n + j - SideCount);
+                inds.Add(n + (j + 1) % SideCount - SideCount);
 
+                //inds.Add(n + j);
                 //inds.Add(n + j - SideCount);
+                //
+                //inds.Add(n + j - SideCount);
+                //inds.Add((j + 1) % SideCount + n);
+                //
+                //inds.Add((j + 1) % SideCount + n);
                 //inds.Add(n + j);
 
-
-                inds.Add((j + SideCount) % SideCount + n);
+                //inds.Add((j + 1) % SideCount + n);
+                //inds.Add(n + j - SideCount);
+                //
+                //inds.Add(n + j - SideCount);
+                //inds.Add(n + (j + 1) % SideCount - SideCount);
+                //
+                //inds.Add(n + (j + 1) % SideCount - SideCount);
+                //inds.Add((j + 1) % SideCount + n);
             }
         }
 
         mesh.SetVertices(verts);
         mesh.SetColors(colors);
-        mesh.SetIndices(inds.ToArray(), MeshTopology.LineStrip, 0);
+        mesh.SetIndices(inds.ToArray(), MeshTopology.Triangles, 0);
         //Vector3[] pos = mesh.vertices;
         
     }

@@ -29,6 +29,8 @@ public static class BrushManager {
         // if unable to instantiat, return LineBrush by default 
         IBrush o = (ScriptableObject.CreateInstance(name) as IBrush) ?? ScriptableObject.CreateInstance<LineBrush>();
         o.Stroke = stroke;
+        //Debug.Log(options);
+        //o.SetOptions(options);
         return o;
     }
 

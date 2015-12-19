@@ -21,7 +21,7 @@ public interface IBrush
     /// <summary>
     /// Called every Update
     /// </summary>
-    void Draw();
+    void Update();
 
     /// <summary>
     /// Called when removing brush from stroke

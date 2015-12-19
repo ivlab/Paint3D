@@ -15,27 +15,30 @@ public class PaintTester : MonoBehaviour {
         mainCam = GameObject.FindObjectOfType<Camera>();
 
         //painting.CurrentBrush = "LineBrush";
-        painting.CurrentBrush = "TubeBrush";
+        painting.CurrentBrush = "BubbleBrush";
+        //painting.CurrentBrush = "TubeBrush";
 
-        painting.StartNewStroke();
-
-        Vertex v = new Vertex();
-        v.position = new Vector4(0, 0, 0);
-        v.orientation = Quaternion.LookRotation(v.position);
-        painting.AddVertex(v);
-
-        v = new Vertex();
-        v.position = new Vector4(0, 0, 3);
-        v.orientation = Quaternion.LookRotation(v.position);
-        painting.AddVertex(v);
-
-        v = new Vertex();
-        v.position = new Vector4(0, 3, 3);
-        v.orientation = Quaternion.LookRotation(v.position - new Vector4(2,0,0));
-        painting.AddVertex(v);
-
-        painting.EndStroke();
-	}
+        //painting.StartNewStroke();
+        //
+        //Vertex v = new Vertex();
+        //v.position = new Vector4(0, 0, 0);
+        //v.orientation = Quaternion.LookRotation(Vector3.forward);
+        //painting.AddVertex(v);
+        //
+        //v = new Vertex();
+        //v.position = new Vector4(0, 0, 3);
+        //Quaternion q = Quaternion.LookRotation(Vector3.forward);
+        //q = q * Quaternion.Euler(new Vector3(-45, 0, 0));
+        //v.orientation = q;
+        //painting.AddVertex(v);
+        //
+        //v = new Vertex();
+        //v.position = new Vector4(0, 3, 3);
+        //v.orientation = Quaternion.LookRotation(Vector3.up);
+        //painting.AddVertex(v);
+        //
+        //painting.EndStroke();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -52,9 +55,14 @@ public class PaintTester : MonoBehaviour {
         {
             painting.EndStroke();
         }
+
+        if (Input.GetButtonDown("Fire2"))
+        {
+            painting.EndStroke();
+        }
         Vector3 mpos = Input.mousePosition;
-        Ray ray = mainCam.ScreenPointToRay(mpos);
-        Vector3 pos = ray.GetPoint(5);
+        mpos.z = 10f;
+        Vector3 pos = mainCam.ScreenToWorldPoint(mpos);
 
         if (painting.CurrentStroke != null)
         {

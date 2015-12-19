@@ -35,13 +35,13 @@ public class Painting : MonoBehaviour {
     ///     This dictionary has Key = name of option, Value = value of option
     ///     
     /// </summary>
-    public Dictionary<string, Dictionary<string, object>> options;
+    public Dictionary<string, Dictionary<string, object>> Options;
 
     void Awake()
     {
         strokes = new List<Stroke>();
 
-        options = new Dictionary<string, Dictionary<string, object>>();
+        Options = new Dictionary<string, Dictionary<string, object>>();
 
         foreach (string name in BrushManager.AvailableBrushes)
         {
@@ -50,9 +50,12 @@ public class Painting : MonoBehaviour {
             foreach (KeyValuePair<string, object> pair in defaultOpt)
             {
                 opt.Add(pair.Key, pair.Value);
+                //Debug.Log(pair.Key);
             }
-            options.Add(name, opt);
+            Options.Add(name, opt);
         }
+
+        
 
         children = new List<GameObject>();
     }
@@ -81,8 +84,9 @@ public class Painting : MonoBehaviour {
             strokes.Add(CurrentStroke);
             curIndex = strokes.Count - 1;
             CurrentStroke.Brush = BrushManager.CreateBrush(CurrentStroke, CurrentBrush, null);
-            Debug.Log(CurrentStroke.Brush.BrushName);
-            CurrentStroke.Brush.SetOptions(options[CurrentStroke.Brush.BrushName]);
+            //Debug.Log(CurrentStroke.Brush.BrushName);
+            //Debug.Log(Options[CurrentStroke.Brush.BrushName]);
+            CurrentStroke.Brush.SetOptions(Options[CurrentStroke.Brush.BrushName]);
             CurrentStroke.enabled = true;
         }
     }

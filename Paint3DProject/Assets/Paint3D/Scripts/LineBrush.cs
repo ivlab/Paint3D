@@ -34,7 +34,7 @@ public class LineBrush : Brush {
         UnityEngine.Object.Destroy(lr);
     }
 
-    public override void Draw()
+    public override void Update()
     {
         //
     }
@@ -67,10 +67,10 @@ public class LineBrush : Brush {
 
     public override void SetOptions(Dictionary<string, object> newOptions)
     {
-        object startW; // = startWidth;
-        object endW;// = endWidth;
-        object startC;// = startColor;
-        object endC;// = endColor;
+        object startW = startWidth;
+        object endW = endWidth;
+        object startC = startColor;
+        object endC = endColor;
 
         if (newOptions.TryGetValue("StartWidth", out startW))
         {
@@ -86,11 +86,16 @@ public class LineBrush : Brush {
                 endWidth = (float)endW;
             }
         }
-        if (newOptions.TryGetValue("StartWidth", out startC))
+        startColor = (Color)newOptions["StartColor"];
+        lr.SetColors(startColor, endColor);
+        if (newOptions.TryGetValue("StartColor", out startC))
         {
+            Debug.Log(startColor);
+
             if (startW is Color)
             {
                 startColor = (Color)startC;
+                Debug.Log(startColor);
             }
         }
         if (newOptions.TryGetValue("EndColor", out endC))

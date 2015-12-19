@@ -40,7 +40,7 @@ public class Stroke : MonoBehaviour {
 	void Update () {
         if (Brush != null)
         {
-            Brush.Draw();
+            Brush.Update();
         }
 	}
 
